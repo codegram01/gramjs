@@ -17,8 +17,15 @@ Gramjs have 3 function
 ### function e(tag, ops, ...childs) {}
 function e create and return new html element.
 e just like wrap of document.createElement and add more feature
+```javascript
+e("div", {},
+  e("h1", {text: "Hello World"}),
+  e("input", {value: "Alex", placeholder: "Enter name"} ),
+)
+```
 
-you can add element property in ops 
+you can add element property in ops
+
 ops:
 - text : it will do elm.innerText = value
 - html : it will do elm.innerHTML = value
