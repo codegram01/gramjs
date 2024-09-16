@@ -3,9 +3,9 @@
 Smallest Javascript framework. The only Javascript Framework you can understand.
 GramJs only have 100 line code and 3 function.
 
-Check example at folder demo
+Check example at folder demo or [watch demo video](https://youtu.be/ZJCYPME4gAE)
 
-[Video when i create]()
+[Video when i create](https://youtu.be/ZJCYPME4gAE)
 
 ## Usage
 - Just copy file gram.js and add to your project 
@@ -29,9 +29,11 @@ ops:
 ### function ref(value) {}
 ref create reactive value. 
 
-Create value: const myVal = ref("Hello World")
-Get value: myVal.value
-Change value: myVal.value = "Something"
+Create value: const myVal = ref("Hello World").
+
+Get value: myVal.value.
+
+Change value: myVal.value = "Something".
 
 you bind ref value to html element like this
 ```javascript
