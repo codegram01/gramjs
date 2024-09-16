@@ -36,11 +36,11 @@ ops:
 ### function ref(value) {}
 ref create reactive value. 
 
-Create value: const myVal = ref("Hello World").
+Create value: const myVal = ref("Hello World")
 
-Get value: myVal.value.
+Get value: myVal.value
 
-Change value: myVal.value = "Something".
+Change value: myVal.value = "Something"
 
 you bind ref value to html element like this
 ```javascript
