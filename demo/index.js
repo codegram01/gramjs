@@ -1,4 +1,4 @@
-import { e, range, ref } from "../gram.js"
+import { e, range, ref } from "/gram.js"
 
 const app = document.getElementById("app")
 
