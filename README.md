@@ -88,14 +88,17 @@ range(e("ul") ,fruits, (fruit, index) => {
 When you change array, you need call myArr.markChange() to update html
 
 ### function g_if(ctnElm, op, ...render) {}
-g_if is condition render,
+g_if is condition render
 
 g_if recevive
 - ctn: g_if need placeholder element 
-- op : is condition value
+- op : is condition reactive value create with ref
 - ...render : list render function for render element and return 
 element
-g_if return ctnElm
+
+g_if return ctnElm.
+
+when condition false g_if remove all render, and when true it run render again 
 
 Example:
 ```javascript
