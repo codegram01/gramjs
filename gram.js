@@ -116,9 +116,14 @@ export function range(ctnElm, arrItem, render) {
   function callRender() {
     const arrItemWrap = arrItem.value ? arrItem.value : arrItem;
     for (let i = 0; i < arrItemWrap.length; i++) {
-      const itemElm = render(arrItemWrap[i], i);
-
-      ctnElm.appendChild(itemElm);
+      const r = render(arrItemWrap[i], i);
+      if(Array.isArray(r)){
+        r.forEach(item => {
+          ctnElm.appendChild(item);
+        })
+      } else {
+        ctnElm.appendChild(r);
+      }
     }
 
     return ctnElm;
@@ -134,10 +139,15 @@ export function range(ctnElm, arrItem, render) {
   return callRender();
 }
 
-export function g_if(ctnElm, op, ...render) {
+export function g_if(ctnElm, op, render) {
   function callRender(){
-    for (let i = 0; i < render.length; i++) {
-      ctnElm.appendChild(render[i]())
+    const r = render();
+    if(Array.isArray(r)){
+      r.forEach(item => {
+        ctnElm.appendChild(item);
+      })
+    } else {
+      ctnElm.appendChild(r);
     }
   }
   function killRender(){

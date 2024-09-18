@@ -76,7 +76,7 @@ range to help you map array value to html
 range recevive
 - parentElm: range need placeholder element for render
 - arrItem : array item
-- render : function e , logic for render 1 element of array
+- render : logic for render 1 element of array. render can return 1 element or array element
 range return parentElm with childs add
 
 like when you have 
@@ -85,20 +85,36 @@ const fruits = ref(["apple", "banana", "orange"])
 ```
 display array to html like this
 ```javascript
+// render 1 element
 range(e("ul") ,fruits, (fruit, index) => {
       return e("li", {text: `${index}: ${fruit}`})
+    })
+
+// render 1 element with childs
+range(e("div") ,fruits, (fruit, index) => {
+      return e("div", {}
+        e("span", {text: index}),
+        e("span", {text: fruit})
+      )
+    })
+  
+// render multiple childs
+range(e("div") ,fruits, (fruit, index) => {
+      return [
+        e("span", {text: index}),
+        e("span", {text: fruit})
+      ]
     })
 ```
 When you change array, you need call myArr.markChange() to update html
 
-### function g_if(ctnElm, op, ...render) {}
+### function g_if(ctnElm, op, render) {}
 g_if is condition render
 
 g_if recevive
 - ctn: g_if need placeholder element 
 - op : is condition reactive value create with ref
-- ...render : list render function for render element and return 
-element
+- render : logic render element, return element or list element
 
 g_if return ctnElm.
 
@@ -108,9 +124,17 @@ Example:
 ```javascript
 const showMess = ref(true)
 
+// render return 1 element
 g_if(e("div"), showMess,
-    () => e("span", {text: "message 1"}),
-    () => e("span", {text: "message 2"})
+    () => e("span", {text: "message 1"})
+),
+
+// render return multiple element
+g_if(e("div"), showMess,
+    () => [
+      e("span", {text: "message 1"}), 
+      e("span", {text: "message 2"})
+    ]
 ),
 ```
 When showMess = false -> message 1 and 2 will be delete
