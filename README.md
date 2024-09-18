@@ -77,6 +77,7 @@ range recevive
 - parentElm: range need placeholder element for render
 - arrItem : array item
 - render : logic for render 1 element of array. render can return 1 element or array element
+
 range return parentElm with childs add
 
 like when you have 
