@@ -5,9 +5,19 @@ export function e(tag, ops, ...childs) {
     for (const [key, op] of Object.entries(ops)) {
       if (key.startsWith("on")) {
         const event = key.slice(2);
-        elm.addEventListener(event, op);
+
+        switch (event){
+          case "mounted":
+            op(elm);
+            break;
+          default:
+            elm.addEventListener(event, op);
+            break;
+        }
+        
         continue;
       }
+
       if (op.isRef) {
         switch (key) {
           case "text":
@@ -31,10 +41,10 @@ export function e(tag, ops, ...childs) {
               elm.value = op.value;
             });
             break;
-          case "show":
-            elm.style.display = op.value ? "" : "none"
+          case "show": // show just hide element
+            elm.style.display = op.value ? "" : "none";
             op.subscribe(() => {
-              elm.style.display = op.value ? "" : "none"
+              elm.style.display = op.value ? "" : "none";
             });
             break;
           default:
@@ -78,51 +88,80 @@ export function ref(value) {
   const subscribes = [];
   const refObject = {
     isRef: true,
-  
+
     get value() {
       return value;
     },
     set value(newValue) {
       value = newValue;
-      this.callSubscribe()
+      this.callSubscribe();
     },
-
 
     subscribe(func) {
       subscribes.push(func);
     },
-    callSubscribe(){
+    callSubscribe() {
       for (const func of subscribes) {
         func();
       }
     },
-    markChange(){
+    markChange() {
       this.callSubscribe();
-    }
+    },
   };
   return refObject;
 }
 
-export function range(arrItem, render) {
-    const ctn = e("div");
-    
-    function callRender(){
-      const arrItemWrap = arrItem.value ? arrItem.value : arrItem
-      for(let i = 0; i < arrItemWrap.length; i++){
-        const itemElm = render(arrItemWrap[i], i);
+export function range(ctnElm, arrItem, render) {
+  function callRender() {
+    const arrItemWrap = arrItem.value ? arrItem.value : arrItem;
+    for (let i = 0; i < arrItemWrap.length; i++) {
+      const itemElm = render(arrItemWrap[i], i);
 
-        ctn.appendChild(itemElm)
+      ctnElm.appendChild(itemElm);
+    }
+
+    return ctnElm;
+  }
+
+  if (arrItem.isRef) {
+    arrItem.subscribe(() => {
+      ctnElm.innerHTML = "";
+      callRender();
+    });
+  }
+
+  return callRender();
+}
+
+export function g_if(ctnElm, op, ...render) {
+  function callRender(){
+    for (let i = 0; i < render.length; i++) {
+      ctnElm.appendChild(render[i]())
+    }
+  }
+  function killRender(){
+    ctnElm.innerHTML = "";
+  }
+
+  if (op.isRef) {
+    if(op.value){
+      callRender();
+    } 
+
+    op.subscribe(() => {
+      if(op.value){
+        callRender();
+      } else {
+        killRender();
       }
+    });
 
-      return ctn
+  } else {
+    if(op){
+      callRender();
     }
+  }
 
-    if(arrItem.isRef){
-      arrItem.subscribe(()=> {
-        ctn.innerHTML = "";
-        callRender()
-      })
-    }
-
-    return callRender()
+  return ctnElm;
 }
