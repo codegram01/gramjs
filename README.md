@@ -104,10 +104,10 @@ Example:
 ```javascript
 const showMess = ref(true)
 
-g_if(e("div"), showMess, () =>
+g_if(e("div"), showMess,
     () => e("span", {text: "message 1"}),
     () => e("span", {text: "message 2"})
-  ),
+),
 ```
 When showMess = false -> message 1 and 2 will be delete
 
