@@ -93,7 +93,7 @@ range(e("ul") ,fruits, (fruit, index) => {
 
 // render 1 element with childs
 range(e("div") ,fruits, (fruit, index) => {
-      return e("div", {}
+      return e("div", {},
         e("span", {text: index}),
         e("span", {text: fruit})
       )
