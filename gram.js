@@ -62,6 +62,9 @@ export function e(tag, ops, ...childs) {
         case "html":
           elm.innerHTML = op;
           continue;
+        case "show":
+          elm.style.display = op ? "" : "none";
+          continue;
         default:
           elm[key] = op;
           continue;
